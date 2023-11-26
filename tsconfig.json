@@ -18,7 +18,11 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+
+    /* Apollo Server */
+    "rootDirs": ["src"],
+    "outDir": "public"
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
