@@ -21,8 +21,8 @@
     "noFallthroughCasesInSwitch": true,
 
     /* Apollo Server */
-    "rootDirs": ["src"],
-    "outDir": "public"
+    "rootDir": "./src",
+    "outDir": "./public"
   },
   "include": ["src"],
   "references": [{ "path": "./tsconfig.node.json" }]
