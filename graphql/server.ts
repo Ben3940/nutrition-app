@@ -1,7 +1,7 @@
 import { data } from './data/nutrition.tsx';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { typeDefs } from './graphql/schema.ts';
+import { typeDefs } from './schema.ts';
 
 const PORT: number = 4000;
 
