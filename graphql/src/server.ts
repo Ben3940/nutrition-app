@@ -1,13 +1,15 @@
-import { data } from './data/nutrition.tsx';
+import { data } from './data/nutrition.js';
 import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
-import { typeDefs } from './schema.ts';
+import { typeDefs } from './schema.js';
 
 const PORT: number = 4000;
 
 const resolvers = {
   Query: {
-    food: () => data,
+    foods() {
+      return data.foods;
+    },
   },
 };
 
