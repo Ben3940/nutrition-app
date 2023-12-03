@@ -11,4 +11,8 @@ export const typeDefs = `#graphql
         sugars: String!
     }
 
+    type Query {
+        foods: [Food]
+    }
+
 `;
