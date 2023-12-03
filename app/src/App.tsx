@@ -1,5 +1,5 @@
 import { Header } from './components/Header';
-import { data } from './data/nutrition';
+// import { data } from './data/nutrition';
 
 function App() {
   return (
