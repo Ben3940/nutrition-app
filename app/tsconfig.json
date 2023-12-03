@@ -18,12 +18,14 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "assests": ["./src/data/*"]
 
     // /* Apollo Server */
     // "rootDir": "./src",
     // "outDir": "./dist"
   },
   "include": ["src", "graphql"],
+
   "references": [{ "path": "./tsconfig.node.json" }]
 }
