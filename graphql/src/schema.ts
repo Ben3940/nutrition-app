@@ -3,6 +3,11 @@ export const typeDefs = `#graphql
         no: ID!
         name: String!
         serving_size: String!
+        nutrition: Nutrition!
+    }
+
+    type Nutrition {
+        no: ID!
         calories: Int!
         total_fat: String!
         cholesterol: String!

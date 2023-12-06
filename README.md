@@ -13,12 +13,20 @@ Each main part has a `dist` and a `src` folder. The files from `src` are the inp
 
 The scripts for this project must be executed at the top level of the project (so in `nutrition-app/`).
 
+# Database Design
+
+SQLite is used to manage the project's db. There are two tables defined in the db
+
+- `food`: Stores food name, serving size, and foreign key reference to `nutrition` table
+- `nutrition`: Stores calories, total fat, cholesterol, sodium, protein, and sugars for food
+
+There are no constraints on columns, except both tables' PRIMARY KEY column (ID) and the FOREIGN KEY column in `food`
+
 # To Implement Next
 
 Ideas to implement into the project next
 
-- Integrate a sqlite db for storing data instead of storing static data in a ts file (`graphql/src/data/nutrition.ts`).
-- Connect the sqlite db to the Apollo server in `graphql/`
+- Develop wrapper class to handle communication between Apollo server (GraphQL requests) and SQLite db.
 - Expose the GraphQL API to the client application
 
 # Issues
