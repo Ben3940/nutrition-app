@@ -1,7 +1,10 @@
 import sqlite3 from 'sqlite3';
 import { data } from './data/nutrition.js';
 
-const db = new sqlite3.Database('./dist/data/db.db', sqlite3.OPEN_READWRITE);
+const db = new sqlite3.Database(
+  './graphql/dist/data/db.db',
+  sqlite3.OPEN_READWRITE
+);
 
 function init_table(): void {
   db.serialize(() => {
@@ -66,9 +69,9 @@ function select_all_table(table: string): void {
   });
 }
 
-init_table();
-load_food_table();
-load_nutrition_table();
+// init_table();
+// load_food_table();
+// load_nutrition_table();
 select_all_table('food');
-select_all_table('nutrition');
+// select_all_table('nutrition');
 db.close();
