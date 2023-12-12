@@ -8,7 +8,7 @@ export const typeDefs = `#graphql
 
     type Nutrition {
         no: ID!
-        calories: Int!
+        calories: String!
         total_fat: String!
         cholesterol: String!
         sodium: String!

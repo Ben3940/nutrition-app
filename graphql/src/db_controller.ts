@@ -1,5 +1,7 @@
 import sqlite3 from 'sqlite3';
 import { data } from './data/nutrition.js';
+import { food } from './types/food.js';
+import { nutrition } from './types/nutrition.js';
 
 const db = new sqlite3.Database(
   './graphql/dist/data/db.db',
@@ -9,10 +11,10 @@ const db = new sqlite3.Database(
 function init_table(): void {
   db.serialize(() => {
     db.run(
-      'CREATE TABLE food (ID PRIMARY KEY, name TEXT, serving_size TEXT, nutrition_ID REFERENCES nutrition(ID))'
+      'CREATE TABLE food (No PRIMARY KEY, name TEXT, serving_size TEXT, nutrition_ID REFERENCES nutrition(ID))'
     );
     db.run(
-      'CREATE TABLE nutrition (ID PRIMARY KEY, calories TEXT, total_fat TEXT, cholesterol TEXT, sodium TEXT, protein TEXT, sugars TEXT)'
+      'CREATE TABLE nutrition (No PRIMARY KEY, calories TEXT, total_fat TEXT, cholesterol TEXT, sodium TEXT, protein TEXT, sugars TEXT)'
     );
   });
 }
@@ -24,9 +26,9 @@ function load_food_table(): void {
     db.run(sql, [No, name, serving_size, No]);
   });
 
-  db.each('SELECT * FROM food', (err, row) => {
+  db.each('SELECT * FROM food LIMIT 3', (err, row: food) => {
     console.log(
-      `ID: ${row.ID}, Name: ${row.name}, Serv_Size: ${row.serving_size}, Nutr_ID: ${row.nutrition_ID}`
+      `No: ${row.No}, Name: ${row.name}, Serv_Size: ${row.serving_size}, Nutr_ID: ${row.nutrition_ID}`
     );
   });
 }
@@ -48,9 +50,9 @@ function load_nutrition_table(): void {
     }
   );
 
-  db.each('SELECT * FROM nutrition', (err, row) => {
+  db.each('SELECT * FROM nutrition LIMIT 3', (err, row: nutrition) => {
     console.log(
-      `ID: ${row.ID}, Cals: ${row.calories}, Fat: ${row.total_fat}, chol: ${row.cholesterol}, Sodium: ${row.sodium}, Protein: ${row.protein}, Sugars: ${row.sugars}`
+      `No: ${row.No}, Cals: ${row.calories}, Fat: ${row.total_fat}, chol: ${row.cholesterol}, Sodium: ${row.sodium}, Protein: ${row.protein}, Sugars: ${row.sugars}`
     );
   });
 }
@@ -69,9 +71,11 @@ function select_all_table(table: string): void {
   });
 }
 
-// init_table();
-// load_food_table();
-// load_nutrition_table();
-select_all_table('food');
+init_table();
+load_food_table();
+load_nutrition_table();
+// drop_table('food');
+// drop_table('nutrition');
+// select_all_table('food');
 // select_all_table('nutrition');
 db.close();
