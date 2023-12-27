@@ -1,49 +1,36 @@
-import sqlite3 from 'sqlite3';
+//import sqlite3 from 'sqlite3';
+import Database, { Statement } from 'better-sqlite3';
 import { data } from './data/nutrition.js';
 import { food } from './types/food.js';
 import { nutrition } from './types/nutrition.js';
 
 export class Controller {
-  private db: sqlite3.Database;
-  private data: (food | nutrition)[] = [];
-  private names: string[] = [];
+  private db: Database;
+
   constructor() {
-    this.db = new sqlite3.Database(
-      './graphql/dist/data/db.db',
-      sqlite3.OPEN_READWRITE
-    );
+    this.db = new Database('./graphql/dist/data/db.db');
+
+    // WAL ("Write-Ahead Log") helps with performance
+    // Per SQLite docs:
+    //   "All processes using a database must be on the same host
+    //   computer; WAL does not work over a network filesystem."
+    //
+    //   Does this apply for k8, where DB might be in different container?
+    //
+    // Per better-sqlite3 docs, consider "Checkpoint starvation"
+    //   https://github.com/WiseLibs/better-sqlite3/blob/master/docs/performance.md
+    this.db.pragma('journal_mode = WAL');
   }
 
-  get_food_table(table_name: string, callback): void {
-    let data: (food | nutrition)[] = [];
-    this.db.serialize(() => {
-      this.db.each(
-        `SELECT * FROM ${table_name} LIMIT 3`,
-        (err, row: food) => {
-          data.push(row);
-        },
-        () => {
-          console.log(typeof data);
-          console.log(typeof sqlite3.Database);
-          callback(data);
-        }
-      );
-    });
-  }
-
-  extract_data(data: (food | nutrition)[]): void {
-    this.data = data;
+  get_entire_table(table_name: string): (food | nutrition)[] {
+    const stmt: Statement = this.db.prepare(`SELECT * FROM ${table_name}`);
+    return stmt.all();
   }
 
   close(): void {
     this.db.close();
   }
-
-  get_data() {
-    return this.data;
-  }
 }
 
-const base = new Controller();
-base.get_food_table('food', base.extract_data);
-console.log(base.get_data());
+// const base = new Controller();
+// console.log(base.get_entire_table('food'));
