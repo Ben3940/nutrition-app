@@ -3,6 +3,8 @@ import { ApolloServer } from '@apollo/server';
 import { startStandaloneServer } from '@apollo/server/standalone';
 import { typeDefs } from './schema.js';
 import { Controller } from './db_controller.js';
+import { food } from './types/food.js';
+import { nutrition } from './types/nutrition.js';
 
 const PORT: number = 4000;
 const db = new Controller();
@@ -21,8 +23,8 @@ const resolvers = {
     nutrition_id(parent, args) {
       return db.get_by_No(args.table_name, args.No);
     },
-    food_names() {
-      return db.get_food_names().map((obj) => {
+    food_names(): Array<Partial<food['name']>> {
+      return db.get_food_names().map((obj: Pick<food, 'name'>): string => {
         return obj.name;
       });
     },

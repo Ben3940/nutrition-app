@@ -34,11 +34,9 @@ export class Controller {
     return stmt.get();
   }
 
-  get_food_names() {
+  get_food_names(): Array<Pick<food, 'name'>> {
     const stmt: Statement = this.db.prepare('SELECT name FROM food');
-    const row = stmt.all();
-    console.log(row);
-    return row;
+    return stmt.all();
   }
 
   close(): void {
