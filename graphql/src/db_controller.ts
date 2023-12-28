@@ -27,6 +27,20 @@ export class Controller {
     return stmt.all();
   }
 
+  get_by_No(table_name: string, No: string): food | nutrition {
+    const stmt: Statement = this.db.prepare(
+      `SELECT * FROM ${table_name} WHERE No = ${No}`
+    );
+    return stmt.get();
+  }
+
+  get_food_names() {
+    const stmt: Statement = this.db.prepare('SELECT name FROM food');
+    const row = stmt.all();
+    console.log(row);
+    return row;
+  }
+
   close(): void {
     this.db.close();
   }

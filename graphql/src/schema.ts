@@ -18,6 +18,10 @@ export const typeDefs = `#graphql
 
     type Query {
         foods: [Food]
+        nutritions: [Nutrition]
+        food_id(table_name:String!, No: String!): Food
+        nutrition_id(table_name:String!, No: String!): Nutrition
+        food_names: [String]
     }
 
 `;

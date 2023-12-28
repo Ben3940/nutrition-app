@@ -12,6 +12,20 @@ const resolvers = {
     foods() {
       return db.get_entire_table('food');
     },
+    nutritions() {
+      return db.get_entire_table('nutrition');
+    },
+    food_id(parent, args) {
+      return db.get_by_No(args.table_name, args.No);
+    },
+    nutrition_id(parent, args) {
+      return db.get_by_No(args.table_name, args.No);
+    },
+    food_names() {
+      return db.get_food_names().map((obj) => {
+        return obj.name;
+      });
+    },
   },
 };
 

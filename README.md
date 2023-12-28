@@ -34,4 +34,5 @@ Ideas to implement into the project next
 
 Below is a list of current issues that will be resolved as this project progresses
 
-- How to handle relationship between `Food` and `Nutrition` table (A `Food` type must have an associating `Nutrition` type) when comparing between GraphQL schema and SQLite Foreign keys.
+- ~~How to handle relationship between `Food` and `Nutrition` table (A `Food` type must have an associating `Nutrition` type) when comparing between GraphQL schema and SQLite Foreign keys.~~
+  - Resolvers handle relationship between `Food` and `Nutrition`. Slight issue with how to approach creating resolvers that return portions of these types (i.e. 'calories', 'total_fat', and 'sodium' from `Nutrition` type). Specifically, defining the return types of functions since these portions are objects themselves.
