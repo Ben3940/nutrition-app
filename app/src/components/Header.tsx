@@ -3,8 +3,7 @@
 export function Header() {
   const handle_form = (e) => {
     e.preventDefault();
-    console.log(e);
-    console.dir(e);
+    
   };
   return (
     <header>
