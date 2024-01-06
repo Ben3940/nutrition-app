@@ -29,6 +29,11 @@ const resolvers = {
       });
     },
   },
+  Food: {
+    nutrition(parent, args) {
+      return db.get_by_No('nutrition', parent.No);
+    },
+  },
 };
 
 const server = new ApolloServer({
