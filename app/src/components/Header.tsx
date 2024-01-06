@@ -6,6 +6,10 @@ export function Header({ handle_form, get_all }) {
       <h1>Nu-TRIS</h1>
       <form className='form-container' onSubmit={handle_form} id='search-form'>
         <div className='input-container'>
+          <label htmlFor='no'>No:</label>
+          <input type='number' name='no' id='no' min='0' max='24' />
+        </div>
+        <div className='input-container'>
           <label htmlFor='name'>Name:</label>
           <input type='text' name='name' id='name' />
         </div>

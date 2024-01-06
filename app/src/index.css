@@ -128,7 +128,7 @@ h1 {
 
 @media (max-width: 500px) {
   body {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   #root {
@@ -137,7 +137,7 @@ h1 {
 
   header {
     width: 85vw;
-    padding: 0.2rem;
+    padding: 0.2rem 1rem;
   }
 
   .input-container {
@@ -147,5 +147,6 @@ h1 {
 
   .input-container > input {
     font-size: 0.9rem;
+    width: 10rem;
   }
 }

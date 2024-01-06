@@ -1,12 +1,15 @@
 import { Header } from './components/Header';
+import { event } from './types/event';
+import { form_function } from './types/form_function';
 // import { data } from './data/nutrition';
 
-const handle_form = (e) => {
+const handle_form: form_function = (e: event) => {
   e.preventDefault();
 
   const formHTML: HTMLFormElement = document.getElementById('search-form');
   const form: FormData = new FormData(formHTML);
   const name: FormDataEntryValue | null = form.get('name');
+  const no: FormDataEntryValue | null = form.get('no');
 
   if (name === 'all') {
     fetch('http://localhost:4000/', {
@@ -30,9 +33,32 @@ const handle_form = (e) => {
       .then((res) => res.json())
       .then((data) => console.log(data.data));
   }
+  if (no) {
+    console.log('requesting by name');
+    fetch('http://localhost:4000/', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `query ExampleQuery {
+          food_id(table_name: "food", No: "${no}") {
+            No,
+            name,
+            nutrition {
+              calories
+              sodium
+            }
+          }
+        }`,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data.data));
+  }
 };
 
-const get_all = (e) => {
+const get_all: form_function = (e: event) => {
   e.preventDefault();
 
   fetch('http://localhost:4000/', {
