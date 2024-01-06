@@ -3,12 +3,56 @@
 export function Header() {
   const handle_form = (e) => {
     e.preventDefault();
-    
+
+    const formHTML: HTMLFormElement = document.getElementById('search-form');
+    const form: FormData = new FormData(formHTML);
+    const name: FormDataEntryValue | null = form.get('name');
+
+    if (name === 'all') {
+      fetch('http://localhost:4000/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          query: `query ExampleQuery {
+          foods {
+            No,
+            name
+          }
+        }`,
+        }),
+      })
+        .then((res) => res.json())
+        .then((data) => console.log(data.data));
+    }
+  };
+
+  const get_all = (e) => {
+    e.preventDefault();
+
+    fetch('http://localhost:4000/', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        query: `query ExampleQuery {
+          foods {
+            No
+            name
+            serving_size
+          }
+        }`,
+      }),
+    })
+      .then((res) => res.json())
+      .then((data) => console.log(data.data));
   };
   return (
     <header>
       <h1>Nu-TRIS</h1>
-      <form className='form-container' onSubmit={handle_form}>
+      <form className='form-container' onSubmit={handle_form} id='search-form'>
         <div className='input-container'>
           <label htmlFor='name'>Name:</label>
           <input type='text' name='name' id='name' />
@@ -40,6 +84,11 @@ export function Header() {
         </div>
         <button className='submit-button' type='submit'>
           Search
+        </button>
+      </form>
+      <form className='form-container' onSubmit={get_all} id='all-items-form'>
+        <button className='submit-button' type='submit'>
+          Get All Items
         </button>
       </form>
     </header>
