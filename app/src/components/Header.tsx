@@ -1,27 +1,67 @@
 // import React from 'react';
+{
+  /* <div className='input-container'>
+          <label htmlFor='name'>Name:</label>
+          <input type='text' name='name' id='name' />
+        </div> */
+}
 
-export function Header() {
+export function Header({ names, handle_form, get_all }) {
   return (
     <header>
       <h1>Nu-TRIS</h1>
-      <form action='' className='form-container'>
-        <label htmlFor='name'>Name:</label>
-        <input type='text' name='name' id='name' />
+      <form className='form-container' onSubmit={handle_form} id='search-form'>
+        <div className='input-container'>
+          <label htmlFor='no'>No:</label>
+          <input type='number' name='no' id='no' min='0' max='24' />
+        </div>
 
-        <label htmlFor='calories'>Calories:</label>
-        <input type='number' name='calories' id='calories' />
+        <div className='input-container'>
+          <label htmlFor='name'>Name:</label>
+          <select name='name' id='name'>
+            <option value={''}></option>
+            {names.map((name: string) => {
+              return (
+                <option key={name} value={name}>
+                  {name.toUpperCase()}
+                </option>
+              );
+            })}
+          </select>
+        </div>
 
-        <label htmlFor='fat'>Fat:</label>
-        <input type='number' name='fat' id='fat' />
+        <div className='input-container'>
+          <label htmlFor='calories'>Calories:</label>
+          <input type='number' name='calories' id='calories' />
+        </div>
 
-        <label htmlFor='protien'>Protien:</label>
-        <input type='number' name='protien' id='protien' />
+        <div className='input-container'>
+          <label htmlFor='fat'>Fat:</label>
+          <input type='number' name='fat' id='fat' />
+        </div>
 
-        <label htmlFor='sodium'>Sodium:</label>
-        <input type='number' name='sodium' id='sodium' />
+        <div className='input-container'>
+          <label htmlFor='protien'>Protien:</label>
+          <input type='number' name='protien' id='protien' />
+        </div>
 
-        <label htmlFor='sugar'>Sugar:</label>
-        <input type='number' name='sugar' id='sugar' />
+        <div className='input-container'>
+          <label htmlFor='sodium'>Sodium:</label>
+          <input type='number' name='sodium' id='sodium' />
+        </div>
+
+        <div className='input-container'>
+          <label htmlFor='sugar'>Sugar:</label>
+          <input type='number' name='sugar' id='sugar' />
+        </div>
+        <button className='submit-button' type='submit'>
+          Search
+        </button>
+      </form>
+      <form className='form-container' onSubmit={get_all} id='all-items-form'>
+        <button className='submit-button' type='submit'>
+          Get All Items
+        </button>
       </form>
     </header>
   );

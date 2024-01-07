@@ -1,9 +1,14 @@
 export const typeDefs = `#graphql
     type Food {
-        no: ID!
+        No: ID!
         name: String!
         serving_size: String!
-        calories: Int!
+        nutrition: Nutrition!
+    }
+
+    type Nutrition {
+        No: ID!
+        calories: String!
         total_fat: String!
         cholesterol: String!
         sodium: String!
@@ -13,6 +18,10 @@ export const typeDefs = `#graphql
 
     type Query {
         foods: [Food]
+        nutritions: [Nutrition]
+        food_id(table_name:String!, No: String!): Food
+        nutrition_id(table_name:String!, No: String!): Nutrition
+        food_names: [String]
     }
 
 `;

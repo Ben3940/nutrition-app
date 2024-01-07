@@ -12,11 +12,15 @@
   --light-gray: #4d5157;
   --ash-gray: #303330;
   --white: #fff;
+
+  --background-primary: #2f3e46;
+  --color-primary: #cad2c5;
+  --background-secondary: #52796f;
 }
 
 body {
-  background-color: var(--celeste);
-  color: var(--ash-gray);
+  background-color: var(--background-primary);
+  color: var(--color-primary);
   font-size: 1.2rem;
 }
 
@@ -32,7 +36,7 @@ header {
   flex-direction: column;
   margin: auto;
   width: 50vw;
-  border: 3px solid var(--forest-green);
+  border: 3px solid var(--background-secondary);
   border-radius: 10px;
   padding: 1rem;
   text-align: center;
@@ -40,26 +44,96 @@ header {
 }
 
 h1 {
-  color: var(--forest-green);
+  color: var(--background-secondary);
   padding-bottom: 0.25rem;
 }
 
 .form-container {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
+  display: flex;
+  flex-direction: column;
 }
 
-.form-container > input {
-  color: var(--ash-gray);
+.input-container {
+  width: 50%;
+  margin: auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.input-container > input,
+.input-container > select {
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+  border-radius: 3px;
+  outline: none;
+
   padding: 0.1rem;
-  margin: 0.1rem;
+  margin: 0.3rem;
   font-size: 1.2rem;
-  background-color: var(--celeste);
+  background-color: var(--background-primary);
+}
+
+.submit-button {
+  font-size: 1.2rem;
+  width: 50%;
+  margin: 1rem auto 0.25rem auto;
+  padding: 0.5rem;
+  color: var(--color-primary);
+  border: 2px solid var(--color-primary);
+  border-radius: 10px;
+  background: var(--background-secondary);
+}
+
+@media (max-width: 1300px) {
+  #root {
+    width: 80vw;
+  }
+
+  header {
+    width: 50vw;
+  }
+
+  .input-container {
+    width: 85%;
+    font-size: 0.9rem;
+  }
+
+  .input-container > input,
+  .input-container > select {
+    font-size: 0.9rem;
+    width: 50%;
+  }
+}
+
+@media (max-width: 800px) {
+  #root {
+    width: 100vw;
+  }
+
+  header {
+    width: 70vw;
+  }
+
+  .input-container {
+    width: 95%;
+    font-size: 0.9rem;
+  }
+
+  .input-container > input,
+  .input-container > select {
+    font-size: 0.9rem;
+    width: 50%;
+  }
+
+  .submit-button {
+    font-size: 0.9rem;
+  }
 }
 
 @media (max-width: 500px) {
   body {
-    font-size: 1rem;
+    font-size: 1.1rem;
   }
 
   #root {
@@ -68,15 +142,17 @@ h1 {
 
   header {
     width: 85vw;
-    padding: 0.2rem;
+    padding: 0.2rem 1rem;
   }
 
-  .form-container {
-    display: grid;
-    grid-template-columns: 0.25fr 4.75fr;
+  .input-container {
+    width: 100%;
+    font-size: 0.9rem;
   }
 
-  .form-container > input {
-    font-size: 1rem;
+  .input-container > input,
+  .input-container > select {
+    font-size: 0.9rem;
+    width: 12rem;
   }
 }

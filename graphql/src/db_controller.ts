@@ -1,60 +1,48 @@
-import sqlite3 from 'sqlite3';
+//import sqlite3 from 'sqlite3';
+import Database, { Statement } from 'better-sqlite3';
+import { data } from './data/nutrition.js';
+import { food } from './types/food.js';
+import { nutrition } from './types/nutrition.js';
 
-const data: any = [
-  {
-    No: 0,
-    name: 'Cornstarch',
-    serving_size: '100 g',
-    calories: 381,
-    total_fat: '0.1g',
-    cholesterol: '0',
-    sodium: '9.00 mg',
-    protein: '0.26 g',
-    sugars: '0.00 g',
-  },
-  {
-    No: 1,
-    name: 'Nuts, pecans',
-    serving_size: '100 g',
-    calories: 691,
-    total_fat: '72g',
-    cholesterol: '0',
-    sodium: '0.00 mg',
-    protein: '9.17 g',
-    sugars: '3.97 g',
-  },
-  {
-    No: 2,
-    name: 'Eggplant, raw',
-    serving_size: '100 g',
-    calories: 25,
-    total_fat: '0.2g',
-    cholesterol: '0',
-    sodium: '2.00 mg',
-    protein: '0.98 g',
-    sugars: '3.53 g',
-  },
-];
+export class Controller {
+  private db: Database;
 
-const db = new sqlite3.Database(
-  '/graphql/dist/data/db.sqlite',
-  sqlite3.OPEN_READWRITE
-);
+  constructor() {
+    this.db = new Database('./graphql/dist/data/db.db');
 
-db.serialize(() => {
-  db.run('CREATE TABLE food (name TEXT, serving_size TEXT, calories INT)');
+    // WAL ("Write-Ahead Log") helps with performance
+    // Per SQLite docs:
+    //   "All processes using a database must be on the same host
+    //   computer; WAL does not work over a network filesystem."
+    //
+    //   Does this apply for k8, where DB might be in different container?
+    //
+    // Per better-sqlite3 docs, consider "Checkpoint starvation"
+    //   https://github.com/WiseLibs/better-sqlite3/blob/master/docs/performance.md
+    this.db.pragma('journal_mode = WAL');
+  }
 
-  let sql = 'INSERT INTO food VALUES (?, ?, ?)';
+  get_entire_table(table_name: string): (food | nutrition)[] {
+    const stmt: Statement = this.db.prepare(`SELECT * FROM ${table_name}`);
+    return stmt.all();
+  }
 
-  data.forEach(({ name, serving_size, calories }) => {
-    db.run(sql, [name, serving_size, calories]);
-  });
-
-  db.each('SELECT * FROM food', (err, row) => {
-    console.log(
-      `Name: ${row.name}, Serv_Size: ${row.serving_size}, Cal: ${row.calories}`
+  get_by_No(table_name: string, No: string): food | nutrition {
+    const stmt: Statement = this.db.prepare(
+      `SELECT * FROM ${table_name} WHERE No = ${No}`
     );
-  });
-});
+    return stmt.get();
+  }
 
-db.close();
+  get_food_names(): Array<Pick<food, 'name'>> {
+    const stmt: Statement = this.db.prepare('SELECT name FROM food');
+    return stmt.all();
+  }
+
+  close(): void {
+    this.db.close();
+  }
+}
+
+// const base = new Controller();
+// console.log(base.get_entire_table('food'));

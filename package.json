@@ -12,14 +12,16 @@
     "app-build": "vite --config ./app/vite.config.ts build",
     "gql-build": "vite --config ./graphql/vite.config.ts build",
     "gql-dev": "tsc --project ./graphql/",
+    "gql-dev-tsx": "npx tsx watch --tsconfig ./graphql/tsconfig.json ./graphql/src/db_controller.ts ",
+    "gql-server-start": "npx tsx watch --tsconfig ./graphql/tsconfig.json ./graphql/src/server.ts ",
     "start": "npm run compile && node./dist/index.js"
   },
   "dependencies": {
     "@apollo/server": "^4.9.5",
+    "better-sqlite3": "^9.2.2",
     "graphql": "^16.8.1",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0",
-    "sqlite3": "^5.1.6"
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.2.37",
@@ -30,6 +32,7 @@
     "eslint": "^8.53.0",
     "eslint-plugin-react-hooks": "^4.6.0",
     "eslint-plugin-react-refresh": "^0.4.4",
+    "tsx": "^4.6.2",
     "typescript": "^5.2.2",
     "vite": "^5.0.0"
   }

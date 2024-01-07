@@ -11,19 +11,25 @@ The build tool `Vite` is used alongside the `TypeScript` compiler. Each main fol
 
 Each main part has a `dist` and a `src` folder. The files from `src` are the input files to the build/compile process and outputed to `dist`.
 
-The scripts for this project must be executed at the top level of the project (so in `nutrition-app/`).
+The npm package `tsx` ([package info](https://www.npmjs.com/package/tsx)) resolves the previous issues of being able to execute npm commands from specific locations within the project. This package is used instead of other packages like `nodemon` because it just works out-of-the-box and is actually compatible with the version of `TypeScript` used in this project.
+
+# Database Design
+
+SQLite is used to manage the project's db. There are two tables defined in the db
+
+- `food`: Stores food name, serving size, and foreign key reference to `nutrition` table
+- `nutrition`: Stores calories, total fat, cholesterol, sodium, protein, and sugars for food
+
+There are no constraints on columns, except both tables' PRIMARY KEY column (ID) and the FOREIGN KEY column in `food`
 
 # To Implement Next
 
 Ideas to implement into the project next
 
-- Integrate a sqlite db for storing data instead of storing static data in a ts file (`graphql/src/data/nutrition.ts`).
-- Connect the sqlite db to the Apollo server in `graphql/`
+- Develop wrapper class to handle communication between Apollo server (GraphQL requests) and SQLite db.
 - Expose the GraphQL API to the client application
+- TSC only transpiles TS files to JS files, ignoring all other file types. Additional commands (i.e. 'cp <source_path> <dist_path>') are needed to transfer the SQLite DB file from `src/` to `dist/`.
 
 # Issues
 
 Below is a list of current issues that will be resolved as this project progresses
-
-- The scripts defined in `package.json` are finicky about where they can be executed. If they are not ran at the top level folder (`nutrition-app/`) then the file paths for the TS config files defined in `package.json` will not be located properly
-- Having Vite/Rollup build the `graphql` portion of the project is proving to be a hassle. The ts files in `graphql/src` can be compiled correctly using the script `npm run graphql-dev`. However, getting the sqlite file to transfer into the `dist` folder is not possible with TSC, therefore, Vite is needed for this step (I believe). A few of the issues for Vite during the build phase is the lack of an entry point (i.e. index.html). There is a way to specify the entry point to Rollup via the `vite.config.ts` file, thought I am still looking into the options in more detail.
