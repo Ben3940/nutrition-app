@@ -1,6 +1,12 @@
 // import React from 'react';
+{
+  /* <div className='input-container'>
+          <label htmlFor='name'>Name:</label>
+          <input type='text' name='name' id='name' />
+        </div> */
+}
 
-export function Header({ handle_form, get_all }) {
+export function Header({ names, handle_form, get_all }) {
   return (
     <header>
       <h1>Nu-TRIS</h1>
@@ -9,9 +15,19 @@ export function Header({ handle_form, get_all }) {
           <label htmlFor='no'>No:</label>
           <input type='number' name='no' id='no' min='0' max='24' />
         </div>
+
         <div className='input-container'>
           <label htmlFor='name'>Name:</label>
-          <input type='text' name='name' id='name' />
+          <select name='name' id='name'>
+            <option value={''}></option>
+            {names.map((name: string) => {
+              return (
+                <option key={name} value={name}>
+                  {name.toUpperCase()}
+                </option>
+              );
+            })}
+          </select>
         </div>
 
         <div className='input-container'>
