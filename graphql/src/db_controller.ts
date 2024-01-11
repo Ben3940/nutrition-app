@@ -23,7 +23,9 @@ export class Controller {
   }
 
   get_entire_table(table_name: string): (food | nutrition)[] {
-    const stmt: Statement = this.db.prepare(`SELECT * FROM ${table_name}`);
+    const stmt: Statement = this.db.prepare(
+      `SELECT * FROM ${table_name} ORDER BY No`
+    );
     return stmt.all();
   }
 

@@ -62,7 +62,6 @@ function App() {
 
   const get_all: form_function = (e: event) => {
     e.preventDefault();
-
     fetch('http://localhost:4000/', {
       method: 'POST',
       headers: {
@@ -71,15 +70,24 @@ function App() {
       body: JSON.stringify({
         query: `query ExampleQuery {
           foods {
-            No
-            name
+            No,
+            name,
             serving_size
+            nutrition {
+              No,
+              calories
+              cholesterol,
+              total_fat,
+              protein,
+              sodium,
+              sugars
+            }
           }
         }`,
       }),
     })
       .then((res) => res.json())
-      .then((data) => console.log(data.data));
+      .then((data) => setFoods(data.data.foods));
   };
 
   const get_names = () => {
@@ -136,8 +144,9 @@ function App() {
   return (
     <>
       <Header names={names} handle_form={handle_form} get_all={get_all} />
-      <Food />
-      <Food />
+      {foods.map((food) => {
+        return <Food key={food.No} food={food} />;
+      })}
     </>
   );
 }
