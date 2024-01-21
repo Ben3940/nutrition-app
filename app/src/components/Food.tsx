@@ -10,11 +10,11 @@ export function Food({ food }) {
         <h2>Nutrition Facts</h2>
         <div className='card-nutrition-facts'>
           <h5>Calories: {food.nutrition.calories} cals</h5>
-          <h5>Sodium: 1mg</h5>
-          <h5>Fat: &lt;1g</h5>
-          <h5>Sugar: 10g</h5>
-          <h5>Cholesterol:&lt;1g</h5>
-          <h5>Protien: 2g</h5>
+          <h5>Sodium: {food.nutrition.sodium}</h5>
+          <h5>Fat: {food.nutrition.total_fat}</h5>
+          <h5>Sugar: {food.nutrition.sugars}</h5>
+          <h5>Cholesterol: {food.nutrition.cholesterol}</h5>
+          <h5>Protein: {food.nutrition.protein}</h5>
         </div>
       </section>
     </section>
