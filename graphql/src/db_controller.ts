@@ -41,6 +41,13 @@ export class Controller {
     return stmt.all();
   }
 
+  get_by_name(table_name: string, name: string): food {
+    const stmt: Statement = this.db.prepare(
+      `SELECT * FROM ${table_name} WHERE name LIKE '${name}'`
+    );
+    return stmt.get();
+  }
+
   close(): void {
     this.db.close();
   }

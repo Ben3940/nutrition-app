@@ -5,38 +5,43 @@ import { event } from './types/event';
 import { form_function } from './types/form_function';
 
 function App() {
-  const handle_form: form_function = (e: event) => {
+  const handle_form = (e: Event) => {
     e.preventDefault();
 
-    const formHTML: HTMLFormElement = document.getElementById('search-form');
+    const formHTML = document.getElementById('search-form') as HTMLFormElement;
     const form: FormData = new FormData(formHTML);
     const name: FormDataEntryValue | null = form.get('name');
     const no: FormDataEntryValue | null = form.get('no');
 
-    if (name === 'all') {
+    if (name) {
       fetch('http://localhost:4000/', {
         method: 'POST',
         headers: {
-          'Content-Type': 'application/json',
+          'Content-type': 'application/json',
         },
         body: JSON.stringify({
           query: `query ExampleQuery {
-          foods {
-            No,
-            name,
-            nutrition{
-              calories,
-              sugars
+            food_name(table_name: "food", name: "${name}") {
+              No,
+              name,
+              serving_size,
+              nutrition {
+                No,
+                calories
+                cholesterol,
+                total_fat,
+                protein,
+                sodium,
+                sugars
+              }
             }
-          }
-        }`,
+          }`,
         }),
       })
         .then((res) => res.json())
-        .then((data) => console.log(data.data));
+        .then((data) => setFoods(data.data.food_name));
     }
     if (no) {
-      console.log('requesting by name');
       fetch('http://localhost:4000/', {
         method: 'POST',
         headers: {
@@ -47,9 +52,15 @@ function App() {
             food_id(table_name: "food", No: "${no}") {
               No,
               name,
+              serving_size
               nutrition {
-                calories
-                sodium
+                No,
+              calories
+              cholesterol,
+              total_fat,
+              protein,
+              sodium,
+              sugars
               }
             }
           }`,
