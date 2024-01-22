@@ -1,3 +1,5 @@
+import { form_function } from '../types/form_function';
+
 // import React from 'react';
 {
   /* <div className='input-container'>
@@ -6,7 +8,13 @@
         </div> */
 }
 
-export function Header({ names, handle_form, get_all }) {
+interface header {
+  names: string[];
+  handle_form: form_function;
+  get_all: form_function;
+}
+
+export function Header({ names, handle_form, get_all }: header) {
   return (
     <header>
       <h1>Nu-TRIS</h1>
@@ -23,7 +31,7 @@ export function Header({ names, handle_form, get_all }) {
             {names.map((name: string) => {
               return (
                 <option key={name} value={name}>
-                  {name.toUpperCase()}
+                  {name}
                 </option>
               );
             })}

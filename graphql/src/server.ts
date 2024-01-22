@@ -28,6 +28,9 @@ const resolvers = {
         return obj.name;
       });
     },
+    food_name(parent, args) {
+      return [db.get_by_name(args.table_name, args.name)];
+    },
   },
   Food: {
     nutrition(parent, args) {
