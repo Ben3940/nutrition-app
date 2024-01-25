@@ -18,10 +18,10 @@ const resolvers = {
       return db.get_entire_table('nutrition');
     },
     food_id(parent, args) {
-      return db.get_by_No(args.table_name, args.No);
+      return [db.get_by_No(args.table_name, args.No)];
     },
     nutrition_id(parent, args) {
-      return db.get_by_No(args.table_name, args.No);
+      return [db.get_by_No(args.table_name, args.No)];
     },
     food_names(): Array<Partial<food['name']>> {
       return db.get_food_names().map((obj: Pick<food, 'name'>): string => {

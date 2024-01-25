@@ -62,7 +62,7 @@ function App() {
             }`,
         'food_id'
       );
-      console.log(data);
+      setFoods(data);
       // fetch('http://localhost:4000/', {
       //   method: 'POST',
       //   headers: {
