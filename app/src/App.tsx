@@ -3,9 +3,10 @@ import { Header } from './components/Header';
 import { Food } from './components/Food';
 import { event } from './types/event';
 import { form_function } from './types/form_function';
+import { generic_fetch } from './utils/Generic_Fetch';
 
 function App() {
-  const handle_form = (e: Event) => {
+  const handle_form = async (e: Event) => {
     e.preventDefault();
 
     const formHTML = document.getElementById('search-form') as HTMLFormElement;
@@ -14,135 +15,84 @@ function App() {
     const no: FormDataEntryValue | null = form.get('no');
 
     if (name) {
-      fetch('http://localhost:4000/', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `query ExampleQuery {
-            food_name(table_name: "food", name: "${name}") {
-              No,
-              name,
-              serving_size,
-              nutrition {
+      let data = await generic_fetch(
+        `query Food_Name {
+          food_name(table_name: "food", name: "${name}") {
+                    No,
+                    name,
+                    serving_size,
+                    nutrition {
+                      No,
+                      calories
+                      cholesterol,
+                      total_fat,
+                      protein,
+                      sodium,
+                      sugars
+                    }
+                  }
+        }`,
+        'food_name'
+      );
+      setFoods(data);
+    }
+    if (no) {
+      let data = await generic_fetch(
+        `query Food_ID {
+              food_id(table_name: "food", No: "${no}") {
                 No,
+                name,
+                serving_size
+                nutrition {
+                  No,
                 calories
                 cholesterol,
                 total_fat,
                 protein,
                 sodium,
                 sugars
+                }
               }
-            }
-          }`,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => setFoods(data.data.food_name));
-    }
-    if (no) {
-      fetch('http://localhost:4000/', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `query ExampleQuery {
-            food_id(table_name: "food", No: "${no}") {
-              No,
-              name,
-              serving_size
-              nutrition {
-                No,
-              calories
-              cholesterol,
-              total_fat,
-              protein,
-              sodium,
-              sugars
-              }
-            }
-          }`,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data.data));
+            }`,
+        'food_id'
+      );
+      setFoods(data);
     }
   };
 
-  const get_all: form_function = (e: event) => {
+  const get_all: form_function = async (e: event) => {
     e.preventDefault();
-    fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `query ExampleQuery {
-          foods {
-            No,
-            name,
-            serving_size
-            nutrition {
-              No,
-              calories
-              cholesterol,
-              total_fat,
-              protein,
-              sodium,
-              sugars
-            }
-          }
-        }`,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => setFoods(data.data.foods));
+
+    let data = await generic_fetch(
+      `query Foods {
+              foods {
+                No,
+                name,
+                serving_size
+                nutrition {
+                  No,
+                  calories
+                  cholesterol,
+                  total_fat,
+                  protein,
+                  sodium,
+                  sugars
+                }
+              }
+            }`,
+      'foods'
+    );
+    setFoods(data);
   };
 
-  const get_names = () => {
-    fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `query ExampleQuery {
-          food_names
-        }`,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => setNames(data.data.food_names));
-  };
-
-  const get_food_by_no = (no: string) => {
-    fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `query ExampleQuery {
-          food_id(table_name: "food", No: ${no}) {
-            No,
-            name,
-            serving_size,
-            nutrition {
-              calories,
-              total_fat,
-              sodium,
-              sugars,
-              protein,
-              cholesterol,
-            }
-          }
-        }`,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => setFoods(data.data.food_id));
+  const get_names = async () => {
+    let data = await generic_fetch(
+      `query Food_Names {
+        food_names
+      }`,
+      'food_names'
+    );
+    setNames(data);
   };
 
   const [names, setNames] = useState([]);
