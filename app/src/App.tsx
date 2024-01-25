@@ -3,9 +3,10 @@ import { Header } from './components/Header';
 import { Food } from './components/Food';
 import { event } from './types/event';
 import { form_function } from './types/form_function';
+import { generic_fetch } from './utils/Generic_Fetch';
 
 function App() {
-  const handle_form = (e: Event) => {
+  const handle_form = async (e: Event) => {
     e.preventDefault();
 
     const formHTML = document.getElementById('search-form') as HTMLFormElement;
@@ -42,63 +43,84 @@ function App() {
         .then((data) => setFoods(data.data.food_name));
     }
     if (no) {
-      fetch('http://localhost:4000/', {
-        method: 'POST',
-        headers: {
-          'Content-type': 'application/json',
-        },
-        body: JSON.stringify({
-          query: `query ExampleQuery {
-            food_id(table_name: "food", No: "${no}") {
-              No,
-              name,
-              serving_size
-              nutrition {
+      let data = await generic_fetch(
+        `query ExampleQuery {
+              food_id(table_name: "food", No: "${no}") {
                 No,
-              calories
-              cholesterol,
-              total_fat,
-              protein,
-              sodium,
-              sugars
+                name,
+                serving_size
+                nutrition {
+                  No,
+                calories
+                cholesterol,
+                total_fat,
+                protein,
+                sodium,
+                sugars
+                }
               }
-            }
-          }`,
-        }),
-      })
-        .then((res) => res.json())
-        .then((data) => console.log(data.data));
+            }`,
+        'food_id'
+      );
+      console.log(data);
+      // fetch('http://localhost:4000/', {
+      //   method: 'POST',
+      //   headers: {
+      //     'Content-type': 'application/json',
+      //   },
+      //   body: JSON.stringify({
+      //     query: `query ExampleQuery {
+      //       food_id(table_name: "food", No: "${no}") {
+      //         No,
+      //         name,
+      //         serving_size
+      //         nutrition {
+      //           No,
+      //         calories
+      //         cholesterol,
+      //         total_fat,
+      //         protein,
+      //         sodium,
+      //         sugars
+      //         }
+      //       }
+      //     }`,
+      //   }),
+      // })
+      //   .then((res) => res.json())
+      //   .then((data) => console.log(data.data));
     }
   };
 
   const get_all: form_function = (e: event) => {
     e.preventDefault();
-    fetch('http://localhost:4000/', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        query: `query ExampleQuery {
-          foods {
-            No,
-            name,
-            serving_size
-            nutrition {
-              No,
-              calories
-              cholesterol,
-              total_fat,
-              protein,
-              sodium,
-              sugars
-            }
-          }
-        }`,
-      }),
-    })
-      .then((res) => res.json())
-      .then((data) => setFoods(data.data.foods));
+
+    // fetch('http://localhost:4000/', {
+    //   method: 'POST',
+    //   headers: {
+    //     'Content-Type': 'application/json',
+    //   },
+    //   body: JSON.stringify({
+    //     query: `query ExampleQuery {
+    //       foods {
+    //         No,
+    //         name,
+    //         serving_size
+    //         nutrition {
+    //           No,
+    //           calories
+    //           cholesterol,
+    //           total_fat,
+    //           protein,
+    //           sodium,
+    //           sugars
+    //         }
+    //       }
+    //     }`,
+    //   }),
+    // })
+    //   .then((res) => res.json())
+    //   .then((data) => setFoods(data.data.foods));
   };
 
   const get_names = () => {
