@@ -1,8 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { Food } from './components/Food';
-import { event } from './types/event';
-import { form_function } from './types/form_function';
 import { generic_fetch } from './utils/Generic_Fetch';
 
 function App() {
@@ -60,7 +58,7 @@ function App() {
     }
   };
 
-  const get_all: form_function = async (e: event) => {
+  const get_all = async (e: Event) => {
     e.preventDefault();
 
     let data = await generic_fetch(
