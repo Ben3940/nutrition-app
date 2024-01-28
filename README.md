@@ -1,35 +1,27 @@
-# Project Layout
+# Goals of Project
 
-This project is split into to main parts (folders):
+1. Better understand `TypeScript` (TS) and the benefits of integrating type safety into `JavaScript` code (and coding in general)
 
-- `app`: Contains client-side code (i.e. components, entry point to site, etc.).
-- `graphql`: Contains backend code for GraphQL server to expose GraphQL API for client
+2. Become more proficient with using a build tool (this project uses `Vite` specifically) and structure config files for both `Vite` and TS
 
-The build tool `Vite` is used alongside the `TypeScript` compiler. Each main folder mentioned above contains important config files
+3. Gain experience with creating a `GraphQL` (GQL) API to fetch data from the back-end for the client aspect of the app
 
--`vite.config.ts`: Vite's configuration file for dev server (uses `ESBuild`), production build (uses `Rollup`), and other config options -`tsconfig.json`: The main TS config file for configutation of `TSC` in regards to application code files (i.e. jsx, tsx, etc.) -`tsconfig.node.json`: File more so for configuring how Vite and Node interact after TSC compiles code.
+4. Integrate a `SQLite` database (DB) for data to be stored and then accessed later by the GQL API
 
-Each main part has a `dist` and a `src` folder. The files from `src` are the input files to the build/compile process and outputed to `dist`.
+# Challenges
 
-The npm package `tsx` ([package info](https://www.npmjs.com/package/tsx)) resolves the previous issues of being able to execute npm commands from specific locations within the project. This package is used instead of other packages like `nodemon` because it just works out-of-the-box and is actually compatible with the version of `TypeScript` used in this project.
+1. Project file structure
 
-# Database Design
+- I choose to go with placing the front-end and back-end in their own folders. The project is "small" enough to allow a monolithic repo with these sub-folders. A common issue faced was with specifying `file-paths` to config files (i.e. tsconfig.json, vite.config.ts) for the build tool and `TSC`
 
-SQLite is used to manage the project's db. There are two tables defined in the db
+2. Connecting to the `SQLite` DB
 
-- `food`: Stores food name, serving size, and foreign key reference to `nutrition` table
-- `nutrition`: Stores calories, total fat, cholesterol, sodium, protein, and sugars for food
+- Initially, I used a package called `node-sqlite` to connect to the DB. However, upon further research, this package offers more "low-level" control of `SQL` queries and had a slightly unintuative approach by use of function-chaining. I instead used a package called `better-sqlite` which acts as a "simplified" or "higher-level wrapper" to `node-sqlite` and was significantly easier to use.
 
-There are no constraints on columns, except both tables' PRIMARY KEY column (ID) and the FOREIGN KEY column in `food`
+3. Configuration
 
-# To Implement Next
+# Areas to Improve
 
-Ideas to implement into the project next
+1. Git commit messages
 
-- Develop wrapper class to handle communication between Apollo server (GraphQL requests) and SQLite db.
-- Expose the GraphQL API to the client application
-- TSC only transpiles TS files to JS files, ignoring all other file types. Additional commands (i.e. 'cp <source_path> <dist_path>') are needed to transfer the SQLite DB file from `src/` to `dist/`.
-
-# Issues
-
-Below is a list of current issues that will be resolved as this project progresses
+- I feel my commit messages still need work on becoming more concise yet still informative on what the commit is doing.
