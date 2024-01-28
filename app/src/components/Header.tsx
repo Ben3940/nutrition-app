@@ -37,6 +37,17 @@ export function Header({ names, handle_form, get_all }: header) {
             })}
           </select>
         </div>
+        <div className='input-container'></div>
+        <div className='input-container'>
+          <div className='radio'>
+            <input type='radio' name='ordering' id='radio-desc' value='desc' />
+            <label htmlFor='radio-desc'>Descending</label>
+          </div>
+          <div className='radio'>
+            <input type='radio' name='ordering' id='radio-asc' value='asc' />
+            <label htmlFor='radio-asc'>Ascending</label>
+          </div>
+        </div>
         <button className='submit-button' type='submit'>
           Search
         </button>
