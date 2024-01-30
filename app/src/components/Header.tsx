@@ -37,22 +37,7 @@ export function Header({ names, handle_form, get_all }: header) {
             })}
           </select>
         </div>
-        <div className='input-container'></div>
-        <div className='input-container'>
-          <div className='radio'>
-            <input type='radio' name='ordering' id='radio-less' value='less' />
-            <label htmlFor='radio-less'>Less Than</label>
-          </div>
-          <div className='radio'>
-            <input
-              type='radio'
-              name='ordering'
-              id='radio-greater'
-              value='greater'
-            />
-            <label htmlFor='radio-greater'>Greater Than</label>
-          </div>
-        </div>
+
         <div className='input-container'>
           <label htmlFor='calories'>Calories:</label>
           <input
