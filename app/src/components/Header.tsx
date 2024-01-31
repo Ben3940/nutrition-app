@@ -1,4 +1,5 @@
 import { form_function } from '../types/form_function';
+import { Nutrition_Field } from './Nutrition_Field';
 
 // import React from 'react';
 {
@@ -15,6 +16,14 @@ interface header {
 }
 
 export function Header({ names, handle_form, get_all }: header) {
+  const nutrition_names: string[] = [
+    'Calories',
+    'Sodium',
+    'Fat',
+    'Cholest',
+    'Protein',
+  ];
+
   return (
     <header>
       <h1>Nu-TRIS</h1>
@@ -24,19 +33,22 @@ export function Header({ names, handle_form, get_all }: header) {
           <input type='number' name='no' id='no' min='0' max='24' />
         </div>
 
-        <div className='input-container'>
-          <label htmlFor='name'>Name:</label>
-          <select name='name' id='name'>
-            <option value={''}></option>
-            {names.map((name: string) => {
-              return (
-                <option key={name} value={name}>
-                  {name}
-                </option>
-              );
-            })}
-          </select>
-        </div>
+        {nutrition_names.map((field_name) => {
+          if (field_name === 'Calroies') {
+            return (
+              <Nutrition_Field
+                key={field_name}
+                name={field_name}
+                max_val={1000}
+                unit={'cals'}
+              />
+            );
+          }
+          return (
+            <Nutrition_Field key={field_name} name={field_name} unit={'mg'} />
+          );
+        })}
+
         <button className='submit-button' type='submit'>
           Search
         </button>

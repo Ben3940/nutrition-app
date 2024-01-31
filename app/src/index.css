@@ -70,8 +70,17 @@ h1 {
 
   padding: 0.1rem;
   margin: 0.3rem;
-  font-size: 1.2rem;
+  font-size: 1.3rem;
   background-color: var(--background-primary);
+}
+
+.radio {
+  margin: 0.5rem;
+  display: flex;
+}
+
+.radio > input {
+  margin-right: 0.2rem;
 }
 
 .submit-button {
@@ -199,13 +208,13 @@ h1 {
   }
 
   .submit-button {
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 500px) {
   body {
-    font-size: 1.1rem;
+    font-size: 1.3rem;
   }
 
   #root {
@@ -219,12 +228,44 @@ h1 {
 
   .input-container {
     width: 100%;
-    font-size: 0.9rem;
+    font-size: 1.2rem;
   }
 
   .input-container > input,
   .input-container > select {
     font-size: 0.9rem;
     width: 12rem;
+  }
+
+  .submit-button {
+    font-size: 1rem;
+  }
+
+  .card {
+    font-size: 1.1rem;
+  }
+
+  .card-heading {
+    width: 40%;
+  }
+  .card-section {
+    width: 70%;
+  }
+
+  .card-heading > h2 {
+    margin-top: 1.7rem;
+  }
+
+  .card-heading > h2,
+  .card-serving-size {
+    font-size: 1.1rem;
+  }
+
+  .card-section > h2 {
+    font-size: 1.2rem;
+  }
+
+  .card-nutrition-facts {
+    font-size: 1rem;
   }
 }
