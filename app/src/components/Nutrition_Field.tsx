@@ -7,7 +7,7 @@ interface field {
 export function Nutrition_Field({ name, max_val = 1000, unit }: field) {
   return (
     <div className='input-container'>
-      <label htmlFor='{name}'>{name}:</label>
+      <label htmlFor={name}>{name}:</label>
       <input
         className='input-field-quantity'
         type='number'
@@ -18,17 +18,22 @@ export function Nutrition_Field({ name, max_val = 1000, unit }: field) {
       />
       <div className='unit'>{unit}</div>
       <div className='radio'>
-        <input type='radio' name='ordering' id='radio-less' value='less' />
-        <label htmlFor='radio-less'>&le;</label>
+        <input
+          type='radio'
+          name={`${name}-ordering`}
+          id={`${name}-radio-less`}
+          value='less'
+        />
+        <label htmlFor={`${name}-radio-less`}>&le;</label>
       </div>
       <div className='radio'>
         <input
           type='radio'
-          name='ordering'
-          id='radio-greater'
+          name={`${name}-ordering`}
+          id={`${name}-radio-greater`}
           value='greater'
         />
-        <label htmlFor='radio-greater'>&ge;</label>
+        <label htmlFor={`${name}-radio-greater`}>&ge;</label>
       </div>
     </div>
   );
