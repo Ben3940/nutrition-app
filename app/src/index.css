@@ -56,7 +56,8 @@ h1 {
 .input-container {
   width: 50%;
   margin: auto;
-  display: flex;
+  display: grid;
+  grid-template-columns: 2fr 2fr 1fr 1fr 1fr;
   justify-content: space-between;
   align-items: center;
 }
@@ -74,6 +75,14 @@ h1 {
   background-color: var(--background-primary);
 }
 
+.input-container > label {
+  margin-right: auto;
+}
+
+.input-container > input {
+  margin-left: auto;
+}
+
 .radio {
   margin: 0.5rem;
   display: flex;
@@ -81,6 +90,10 @@ h1 {
 
 .radio > input {
   margin-right: 0.2rem;
+}
+
+.unit {
+  margin-right: auto;
 }
 
 .submit-button {
@@ -222,7 +235,7 @@ h1 {
   }
 
   header {
-    width: 85vw;
+    width: 95vw;
     padding: 0.2rem 1rem;
   }
 
@@ -234,7 +247,7 @@ h1 {
   .input-container > input,
   .input-container > select {
     font-size: 0.9rem;
-    width: 12rem;
+    width: 80%;
   }
 
   .submit-button {

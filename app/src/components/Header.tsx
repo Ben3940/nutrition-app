@@ -34,7 +34,7 @@ export function Header({ names, handle_form, get_all }: header) {
         </div>
 
         {nutrition_names.map((field_name) => {
-          if (field_name === 'Calroies') {
+          if (field_name === 'Calories') {
             return (
               <Nutrition_Field
                 key={field_name}
