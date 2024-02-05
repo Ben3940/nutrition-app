@@ -5,6 +5,13 @@ import { generic_fetch } from './utils/Generic_Fetch';
 import { parse_fields } from './utils/Parse_Fields';
 
 function App() {
+  const nutrition_names: string[] = [
+    'Calories',
+    'Sodium',
+    'Fat',
+    'Cholest',
+    'Protein',
+  ];
   const handle_form = async (e: Event) => {
     e.preventDefault();
 
@@ -13,15 +20,7 @@ function App() {
     const name: FormDataEntryValue | null = form.get('name');
     const no: FormDataEntryValue | null = form.get('no');
 
-    const nutrition_names: string[] = [
-      'Calories',
-      'Sodium',
-      'Fat',
-      'Cholest',
-      'Protein',
-    ];
-
-    parse_fields(form, nutrition_names);
+    console.log(parse_fields(form, nutrition_names));
 
     if (name) {
       let data = await generic_fetch(
@@ -44,8 +43,7 @@ function App() {
         'food_name'
       );
       setFoods(data);
-    }
-    if (no) {
+    } else if (no) {
       let data = await generic_fetch(
         `query Food_ID {
               food_id(table_name: "food", No: "${no}") {
@@ -113,7 +111,12 @@ function App() {
 
   return (
     <>
-      <Header names={names} handle_form={handle_form} get_all={get_all} />
+      <Header
+        names={names}
+        handle_form={handle_form}
+        get_all={get_all}
+        nutrition_names={nutrition_names}
+      />
       {foods.map((food) => {
         return <Food key={food.No} food={food} />;
       })}

@@ -13,16 +13,22 @@ interface header {
   names: string[];
   handle_form: form_function;
   get_all: form_function;
+  nutrition_names: string[];
 }
 
-export function Header({ names, handle_form, get_all }: header) {
-  const nutrition_names: string[] = [
-    'Calories',
-    'Sodium',
-    'Fat',
-    'Cholest',
-    'Protein',
-  ];
+export function Header({
+  names,
+  handle_form,
+  get_all,
+  nutrition_names,
+}: header) {
+  // const nutrition_names: string[] = [
+  //   'Calories',
+  //   'Sodium',
+  //   'Fat',
+  //   'Cholest',
+  //   'Protein',
+  // ];
 
   return (
     <header>
