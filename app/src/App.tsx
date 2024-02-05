@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { Food } from './components/Food';
 import { generic_fetch } from './utils/Generic_Fetch';
+import { parse_fields } from './utils/Parse_Fields';
 
 function App() {
   const handle_form = async (e: Event) => {
@@ -11,6 +12,16 @@ function App() {
     const form: FormData = new FormData(formHTML);
     const name: FormDataEntryValue | null = form.get('name');
     const no: FormDataEntryValue | null = form.get('no');
+
+    const nutrition_names: string[] = [
+      'Calories',
+      'Sodium',
+      'Fat',
+      'Cholest',
+      'Protein',
+    ];
+
+    parse_fields(form, nutrition_names);
 
     if (name) {
       let data = await generic_fetch(
