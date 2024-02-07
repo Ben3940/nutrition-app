@@ -26,7 +26,16 @@ export function Header({ names, handle_form, get_all }: header) {
         </div>
         <div className='input-container'>
           <label htmlFor='name'>Name:</label>
-          <input type='number' name='name' id='name' min='0' max='24' />
+          <select name='name' id='name'>
+            <option value={''}></option>
+            {names.map((name: string) => {
+              return (
+                <option key={name} value={name}>
+                  {name}
+                </option>
+              );
+            })}
+          </select>
         </div>
         <Nutrition_Field name='Calories' unit='cals' />
 

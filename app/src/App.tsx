@@ -111,12 +111,7 @@ function App() {
 
   return (
     <>
-      <Header
-        names={names}
-        handle_form={handle_form}
-        get_all={get_all}
-        nutrition_names={nutrition_names}
-      />
+      <Header names={names} handle_form={handle_form} get_all={get_all} />
       {foods.map((food) => {
         return <Food key={food.No} food={food} />;
       })}
