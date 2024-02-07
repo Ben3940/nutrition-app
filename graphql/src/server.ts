@@ -31,6 +31,9 @@ const resolvers = {
     food_name(parent, args) {
       return [db.get_by_name(args.table_name, args.name)];
     },
+    food_calories(parent, args) {
+      return db.get_by_calories(args.calories, args.less_than);
+    },
   },
   Food: {
     nutrition(parent, args) {

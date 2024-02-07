@@ -48,6 +48,17 @@ export class Controller {
     return stmt.get();
   }
 
+  get_by_calories(calories: number, less_than: boolean) {
+    let query: string = `SELECT * FROM food JOIN nutrition ON food.nutrition_ID = nutrition.No WHERE CAST(nutrition.calories AS INTEGER)`;
+    if (less_than) {
+      query += ` < ${calories}`;
+    } else {
+      query += ` > ${calories}`;
+    }
+    const stmt: Statement = this.db.prepare(query);
+    return stmt.all();
+  }
+
   close(): void {
     this.db.close();
   }
