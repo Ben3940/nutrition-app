@@ -13,23 +13,9 @@ interface header {
   names: string[];
   handle_form: form_function;
   get_all: form_function;
-  nutrition_names: string[];
 }
 
-export function Header({
-  names,
-  handle_form,
-  get_all,
-  nutrition_names,
-}: header) {
-  // const nutrition_names: string[] = [
-  //   'Calories',
-  //   'Sodium',
-  //   'Fat',
-  //   'Cholest',
-  //   'Protein',
-  // ];
-
+export function Header({ names, handle_form, get_all }: header) {
   return (
     <header>
       <h1>Nu-TRIS</h1>
@@ -38,22 +24,11 @@ export function Header({
           <label htmlFor='no'>No:</label>
           <input type='number' name='no' id='no' min='0' max='24' />
         </div>
-
-        {nutrition_names.map((field_name) => {
-          if (field_name === 'Calories') {
-            return (
-              <Nutrition_Field
-                key={field_name}
-                name={field_name}
-                max_val={1000}
-                unit={'cals'}
-              />
-            );
-          }
-          return (
-            <Nutrition_Field key={field_name} name={field_name} unit={'mg'} />
-          );
-        })}
+        <div className='input-container'>
+          <label htmlFor='name'>Name:</label>
+          <input type='number' name='name' id='name' min='0' max='24' />
+        </div>
+        <Nutrition_Field name='Calories' unit='cals' />
 
         <button className='submit-button' type='submit'>
           Search
