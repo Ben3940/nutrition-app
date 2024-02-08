@@ -22,7 +22,8 @@ export const typeDefs = `#graphql
         food_id(table_name:String!, No: String!): [Food]
         nutrition_id(table_name:String!, No: String!): [Nutrition]
         food_names: [String]
-        food_name(table_name:String!, name: String!): [Food]
+        food_name(table_name:String!, name: String!): [Food],
+        food_calories(calories: Int, less_than: Boolean): [Food]
     }
 
 `;

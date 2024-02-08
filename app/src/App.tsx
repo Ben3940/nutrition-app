@@ -2,8 +2,16 @@ import { useEffect, useState } from 'react';
 import { Header } from './components/Header';
 import { Food } from './components/Food';
 import { generic_fetch } from './utils/Generic_Fetch';
+import { parse_fields } from './utils/Parse_Fields';
 
 function App() {
+  const nutrition_names: string[] = [
+    'Calories',
+    'Sodium',
+    'Fat',
+    'Cholest',
+    'Protein',
+  ];
   const handle_form = async (e: Event) => {
     e.preventDefault();
 
@@ -11,6 +19,8 @@ function App() {
     const form: FormData = new FormData(formHTML);
     const name: FormDataEntryValue | null = form.get('name');
     const no: FormDataEntryValue | null = form.get('no');
+
+    const fields = parse_fields(form, nutrition_names);
 
     if (name) {
       let data = await generic_fetch(
@@ -33,8 +43,7 @@ function App() {
         'food_name'
       );
       setFoods(data);
-    }
-    if (no) {
+    } else if (no) {
       let data = await generic_fetch(
         `query Food_ID {
               food_id(table_name: "food", No: "${no}") {
@@ -53,6 +62,28 @@ function App() {
               }
             }`,
         'food_id'
+      );
+      setFoods(data);
+    } else {
+      const cals: string[] = fields[0];
+      let data = await generic_fetch(
+        `query Food_Calories {
+          food_calories(calories: ${cals[1]}, less_than: ${
+          cals[2] === 'less' ? true : false
+        }) {
+            No,
+            name,
+            nutrition {
+              calories
+                cholesterol,
+                total_fat,
+                protein,
+                sodium,
+                sugars
+            }
+          }
+        }`,
+        'food_calories'
       );
       setFoods(data);
     }
