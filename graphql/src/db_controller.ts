@@ -55,6 +55,7 @@ export class Controller {
     } else {
       query += ` > ${calories}`;
     }
+    query += ' ORDER BY nutrition.calories';
     const stmt: Statement = this.db.prepare(query);
     return stmt.all();
   }

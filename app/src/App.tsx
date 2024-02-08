@@ -20,7 +20,7 @@ function App() {
     const name: FormDataEntryValue | null = form.get('name');
     const no: FormDataEntryValue | null = form.get('no');
 
-    console.log(parse_fields(form, nutrition_names));
+    const fields = parse_fields(form, nutrition_names);
 
     if (name) {
       let data = await generic_fetch(
@@ -62,6 +62,28 @@ function App() {
               }
             }`,
         'food_id'
+      );
+      setFoods(data);
+    } else {
+      const cals: string[] = fields[0];
+      let data = await generic_fetch(
+        `query Food_Calories {
+          food_calories(calories: ${cals[1]}, less_than: ${
+          cals[2] === 'less' ? true : false
+        }) {
+            No,
+            name,
+            nutrition {
+              calories
+                cholesterol,
+                total_fat,
+                protein,
+                sodium,
+                sugars
+            }
+          }
+        }`,
+        'food_calories'
       );
       setFoods(data);
     }
